@@ -51,7 +51,7 @@ import com.exadel.aem.toolkit.samples.constants.PathConstants;
     extraClientlibs = "authoring-toolkit.samples.authoring"
 )
 @Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
-public class AbilitiesComponent {
+public class AbilitiesComponent implements AbilitiesAuthoring {
 
     private static final String FIELD_ELEMENTS = "./elements";
     private static final String LABEL_ELEMENTS = "Elements";
@@ -131,5 +131,20 @@ public class AbilitiesComponent {
 
     public String getAbilityLevel() {
         return String.valueOf(abilityLevel);
+    }
+
+    @Override
+    public boolean b() {
+        return false;
+    }
+
+    @Override
+    public boolean f() {
+        return false;
+    }
+
+    @Override
+    public String h() {
+        return null;
     }
 }

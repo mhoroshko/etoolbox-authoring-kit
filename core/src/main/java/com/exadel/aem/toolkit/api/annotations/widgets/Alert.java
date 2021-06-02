@@ -34,7 +34,7 @@ import com.exadel.aem.toolkit.api.annotations.widgets.common.StatusVariant;
 @Retention(RetentionPolicy.RUNTIME)
 @ResourceType(ResourceTypes.ALERT)
 @AnnotationRendering(properties = "all")
-public @interface Alert {
+public @interface BAlert {
 
     /**
      * Maps to the {@code variant} attribute of this Granite UI component's node.

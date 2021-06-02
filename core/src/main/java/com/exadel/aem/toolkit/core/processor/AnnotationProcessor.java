@@ -1,23 +1,30 @@
-package core;
+package com.exadel.aem.toolkit.core.processor;
 
-import com.exadel.aem.toolkit.api.annotations.widgets.Extends;
-import com.google.gson.Gson;
-
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.lang.model.element.*;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.MirroredTypeException;
-import javax.lang.model.util.Elements;
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.AnnotationValue;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.MirroredTypeException;
+import javax.lang.model.util.Elements;
 
-@SupportedAnnotationTypes("*")
+import com.google.gson.Gson;
+
+import com.exadel.aem.toolkit.api.annotations.widgets.Extends;
+
+@SupportedAnnotationTypes("com.exadel.aem.toolkit.api.annotations.widgets.Extends")
 public class AnnotationProcessor extends AbstractProcessor {
 
     private static final String PACKAGE_NAME = "com.exadel.aem.toolkit.api.annotations.widgets.";
@@ -30,11 +37,12 @@ public class AnnotationProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         elementUtils = processingEnv.getElementUtils();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!INIT!!!!!!!!!!!!!!");
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        roundEnv.getElementsAnnotatedWith(Extends.class).forEach(this::changeExtends);
+
         return true;
     }
 

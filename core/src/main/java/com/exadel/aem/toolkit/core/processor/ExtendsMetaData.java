@@ -1,4 +1,4 @@
-package core;
+package com.exadel.aem.toolkit.core.processor;
 
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.ExecutableElement;
