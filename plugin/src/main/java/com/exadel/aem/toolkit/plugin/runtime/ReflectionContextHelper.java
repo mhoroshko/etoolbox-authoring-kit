@@ -44,8 +44,6 @@ import com.exadel.aem.toolkit.api.handlers.HandlesWidgets;
 import com.exadel.aem.toolkit.api.runtime.Injected;
 import com.exadel.aem.toolkit.api.runtime.RuntimeContext;
 import com.exadel.aem.toolkit.plugin.exceptions.ExtensionApiException;
-import com.exadel.aem.toolkit.plugin.maven.PluginRuntime;
-import com.exadel.aem.toolkit.plugin.maven.PluginRuntimeContext;
 import com.exadel.aem.toolkit.plugin.utils.ScopeUtil;
 import com.exadel.aem.toolkit.plugin.utils.ordering.OrderingUtil;
 

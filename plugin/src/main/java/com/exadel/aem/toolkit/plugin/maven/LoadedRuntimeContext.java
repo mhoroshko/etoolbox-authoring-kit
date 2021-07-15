@@ -20,15 +20,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import com.exadel.aem.toolkit.api.runtime.ExceptionHandler;
 import com.exadel.aem.toolkit.plugin.exceptions.PluginException;
 import com.exadel.aem.toolkit.plugin.exceptions.handlers.ExceptionHandlers;
-import com.exadel.aem.toolkit.plugin.runtime.ReflectionContextHelper;
 import com.exadel.aem.toolkit.plugin.runtime.XmlContextHelper;
 import com.exadel.aem.toolkit.plugin.utils.XmlFactory;
 
 /**
- * The implementation of {@link PluginRuntimeContext} for the ToolKit Maven plugin instance that
+ * The implementation of {@link com.exadel.aem.toolkit.plugin.processor.PluginRuntimeContext} for the ToolKit Maven plugin instance that
  * has been properly initialized
  */
-class LoadedRuntimeContext implements PluginRuntimeContext {
+class LoadedRuntimeContext implements com.exadel.aem.toolkit.plugin.processor.PluginRuntimeContext {
     private static final String XML_EXCEPTION_MESSAGE = "Could not initialize XML runtime";
 
     private ReflectionContextHelper pluginReflections;
@@ -82,14 +81,14 @@ class LoadedRuntimeContext implements PluginRuntimeContext {
         private List<String> classPathElements;
         private String packageBase;
         private String terminateOn;
-        private final Consumer<LoadedRuntimeContext> onComplete;
+        private final Consumer<com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext> onComplete;
 
         /**
          * Creates a new instance of this Builder
          * @param onComplete Routine that will be triggered upon Builder completion (basically, assigning the created
          *                   {@code LoadedRuntimeContext} to the global {@code PluginRuntime} instance
          */
-        Builder(Consumer<LoadedRuntimeContext> onComplete) {
+        Builder(Consumer<com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext> onComplete) {
             this.onComplete = onComplete;
         }
 
@@ -133,7 +132,7 @@ class LoadedRuntimeContext implements PluginRuntimeContext {
             if (!isValid()) {
                 return;
             }
-            LoadedRuntimeContext result = new LoadedRuntimeContext();
+            com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext result = new com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext();
             result.pluginReflections = ReflectionContextHelper.fromCodeScope(classPathElements, packageBase);
             result.exceptionHandler = ExceptionHandlers.forSetting(terminateOn);
             result.newXmlUtility();

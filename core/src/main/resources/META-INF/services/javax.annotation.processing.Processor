@@ -1,2 +1,1 @@
-com.exadel.aem.toolkit.core.processor.AnnotationProcessor
-com.exadel.aem.toolkit.core.processor.NaturalOrderingProcessor
+com.exadel.aem.toolkit.plugin.processor.EToolboxProcessor

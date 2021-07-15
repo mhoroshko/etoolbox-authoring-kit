@@ -14,18 +14,18 @@
 package com.exadel.aem.toolkit.plugin.maven;
 
 /**
- * The thread-local {@link PluginRuntimeContext} handler to be used within {@code PluginMojo} execution. Starts with
- * {@link EmptyRuntimeContext} and switches to the {@link LoadedRuntimeContext} upon proper runtime initialization
+ * The thread-local {@link com.exadel.aem.toolkit.plugin.processor.PluginRuntimeContext} handler to be used within {@code PluginMojo} execution. Starts with
+ * {@link com.exadel.aem.toolkit.plugin.processor.EmptyRuntimeContext} and switches to the {@link com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext} upon proper runtime initialization
  * @see PluginMojo#execute()
  */
 public class PluginRuntime {
-    private static final ThreadLocal<PluginRuntimeContext> INSTANCE = ThreadLocal.withInitial(EmptyRuntimeContext::new);
+    private static final ThreadLocal<com.exadel.aem.toolkit.plugin.processor.PluginRuntimeContext> INSTANCE = ThreadLocal.withInitial(com.exadel.aem.toolkit.plugin.processor.EmptyRuntimeContext::new);
 
     private PluginRuntime() {
     }
 
     /**
-     * Gets current {@link PluginRuntimeContext}
+     * Gets current {@link com.exadel.aem.toolkit.plugin.processor.PluginRuntimeContext}
      * @return {@code PluginRuntimeContext} instance
      */
     public static PluginRuntimeContext context() {
@@ -34,14 +34,14 @@ public class PluginRuntime {
 
     /**
      * Creates a Builder intended to accumulate plugin settings and produce a functional ("loaded") {@code PluginRuntimeContext}
-     * @return {@link LoadedRuntimeContext.Builder} instance
+     * @return {@link com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext.Builder} instance
      */
-    static LoadedRuntimeContext.Builder contextBuilder() {
-        return new LoadedRuntimeContext.Builder(INSTANCE::set);
+    static com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext.Builder contextBuilder() {
+        return new com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext.Builder(INSTANCE::set);
     }
 
     /**
-     * Disposes of current {@link LoadedRuntimeContext} instance by calling the {@link ThreadLocal#remove()} method
+     * Disposes of current {@link com.exadel.aem.toolkit.plugin.processor.LoadedRuntimeContext} instance by calling the {@link ThreadLocal#remove()} method
      */
     static void close() {
         INSTANCE.remove();

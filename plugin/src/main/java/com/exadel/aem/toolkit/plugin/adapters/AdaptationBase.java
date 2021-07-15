@@ -23,7 +23,6 @@ import com.exadel.aem.toolkit.api.handlers.Adapts;
 import com.exadel.aem.toolkit.api.handlers.Source;
 import com.exadel.aem.toolkit.api.handlers.Target;
 import com.exadel.aem.toolkit.plugin.exceptions.ReflectionException;
-import com.exadel.aem.toolkit.plugin.maven.PluginRuntime;
 
 /**
  * Presents a base for utility classes implementing {@link Adapts}

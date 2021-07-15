@@ -77,21 +77,21 @@ public class PluginInfo {
     }
 
     /**
-     * Creates a new {@link PluginInfo} instance and fills it with information stored in the {@code Manifest} file
+     * Creates a new {@link com.exadel.aem.toolkit.plugin.processor.PluginInfo} instance and fills it with information stored in the {@code Manifest} file
      * @return {@code PluginIngo} object
      */
-    static PluginInfo getInstance() {
+    static com.exadel.aem.toolkit.plugin.processor.PluginInfo getInstance() {
         Manifest manifest = new Manifest();
         try {
             manifest.read(Thread.currentThread().getContextClassLoader().getResourceAsStream(MANIFEST_FILE_ADDRESS));
             Attributes manifestAttributes = manifest.getMainAttributes();
-            return new PluginInfo(
+            return new com.exadel.aem.toolkit.plugin.processor.PluginInfo(
                 manifestAttributes.getValue(ATTRIBUTE_NAME),
                 manifestAttributes.getValue(ATTRIBUTE_VERSION),
                 manifestAttributes.getValue(ATTRIBUTE_TIMESTAMP));
         } catch (IOException | IllegalArgumentException e) {
             // This is not intended to produce an effective exception
-            return new PluginInfo();
+            return new com.exadel.aem.toolkit.plugin.processor.PluginInfo();
         }
     }
 }

@@ -14,6 +14,10 @@
 
 package com.exadel.aem.toolkit.samples.models;
 
+import com.exadel.aem.toolkit.api.annotations.main.CommonProperty;
+import com.exadel.aem.toolkit.api.annotations.widgets.property.Property;
+import com.exadel.aem.toolkit.samples.models.fieldsets.WeaponFieldSet;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -38,16 +42,25 @@ import com.exadel.aem.toolkit.api.annotations.widgets.attribute.Attribute;
 import com.exadel.aem.toolkit.samples.constants.GroupConstants;
 import com.exadel.aem.toolkit.samples.constants.PathConstants;
 
+import java.io.Writer;
+
 @AemComponent(
     path = "content/warrior-component",
     title = "Warrior Component",
     description = "Create your own warrior",
     resourceSuperType = PathConstants.FOUNDATION_PARBASE_PATH,
     componentGroup = GroupConstants.COMPONENT_CONTAINER_GROUP,
-    isContainer = true
+    isContainer = true,
+    views = {
+        Writer.class,
+        WarriorComponent.class,
+        WeaponFieldSet.class
+    }
 )
 @Dialog
 @EditConfig(
+    emptyText = "ZXC",
+    inherit = true,
     inplaceEditing = {
         @InplaceEditingConfig(
             title = "Component title",
@@ -73,6 +86,7 @@ import com.exadel.aem.toolkit.samples.constants.PathConstants;
         @Tab(title = WarriorComponent.TAB_THEME)
     }
 )
+@CommonProperty(name = "qwe", value = "as1d")
 @Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class WarriorComponent {
 
@@ -116,6 +130,8 @@ public class WarriorComponent {
     @Default(booleanValues = false)
     @ValueMapValue
     private boolean colorTheme;
+
+    private AbilitiesComponent abilitiesComponent;
 
     public String getTitle() {
         return StringUtils.defaultIfBlank(title, DEFAULT_TITLE);

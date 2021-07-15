@@ -150,6 +150,27 @@
             <artifactId>uber-jar</artifactId>
             <classifier>apis</classifier>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.auto/auto-common -->
+        <dependency>
+            <groupId>com.google.auto</groupId>
+            <artifactId>auto-common</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.tools</groupId>
+            <artifactId>tools</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>C:\Program Files\Java\jdk1.8.0_241\lib\tools.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.checkerframework/javacutil -->
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>javacutil</artifactId>
+            <version>3.15.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

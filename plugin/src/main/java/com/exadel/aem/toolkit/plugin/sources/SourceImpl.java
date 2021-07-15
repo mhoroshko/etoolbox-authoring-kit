@@ -18,6 +18,8 @@ import java.lang.annotation.Annotation;
 import com.exadel.aem.toolkit.api.handlers.Source;
 import com.exadel.aem.toolkit.plugin.adapters.AdaptationBase;
 
+import org.reflections.Reflections;
+
 /**
  * Presents a basic implementation of {@link Source} that exposes the metadata that is specific for the underlying class
  * or class member

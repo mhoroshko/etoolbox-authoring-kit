@@ -53,7 +53,7 @@ public class PluginMojo extends AbstractMojo {
     private String terminateOn;
 
     /**
-     * Executes the ToolKit Maven plugin. This is done by initializing {@link PluginRuntime} and then
+     * Executes the ToolKit Maven plugin. This is done by initializing {@link com.exadel.aem.toolkit.plugin.processor.PluginRuntime} and then
      * enumerating classpath entries present in the Maven reactor. Relevant AEM component classes (POJOs or Sling models)
      * are extracted and processed with {@link PackageWriter} instance created for a particular Maven project; the result
      * is written down to the AEM package zip file. The method is run once for each package module that has the ToolKit
@@ -72,7 +72,7 @@ public class PluginMojo extends AbstractMojo {
         }
         pluginDependencies.stream().findFirst().ifPresent(d -> classpathElements.add(d.getFile().getPath()));
 
-        PluginRuntime.contextBuilder()
+        com.exadel.aem.toolkit.plugin.processor.PluginRuntime.contextBuilder()
             .classPathElements(classpathElements)
             .packageBase(componentsReferenceBase)
             .terminateOn(terminateOn)
@@ -80,7 +80,7 @@ public class PluginMojo extends AbstractMojo {
 
         try (PackageWriter packageWriter = PackageWriter.forMavenProject(project, componentsPathBase)) {
             packageWriter.writeInfo(PluginInfo.getInstance());
-            PluginRuntime.context().getReflection().getComponentClasses().forEach(packageWriter::write);
+            com.exadel.aem.toolkit.plugin.processor.PluginRuntime.context().getReflection().getComponentClasses().forEach(packageWriter::write);
         } catch (PluginException e) {
             throw new MojoExecutionException(String.format(PLUGIN_EXECUTION_EXCEPTION_MESSAGE,
                     e.getCause() != null ? e.getCause().getClass().getSimpleName() : e.getClass().getSimpleName(),

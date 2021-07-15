@@ -34,7 +34,6 @@ import com.exadel.aem.toolkit.api.annotations.meta.DialogAnnotation;
 import com.exadel.aem.toolkit.api.annotations.meta.Scopes;
 import com.exadel.aem.toolkit.api.handlers.DialogHandler;
 import com.exadel.aem.toolkit.api.handlers.Source;
-import com.exadel.aem.toolkit.plugin.maven.PluginRuntime;
 
 /**
  * Modifies a DOM {@code Document} with XML-specific routines and data. This is intended

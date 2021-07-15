@@ -43,7 +43,7 @@ import com.exadel.aem.toolkit.api.annotations.meta.ValueRestrictions;
  * @see com.exadel.aem.toolkit.api.annotations.editconfig.EditConfig
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 @AnnotationRendering(properties = "!path")
 public @interface AemComponent {
 
