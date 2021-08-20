@@ -73,8 +73,4 @@ public class Sources {
     public static Source fromAnnotation(Annotation value) {
         return new AnnotationSourceImpl(value);
     }
-
-    public static Source fromElement(Element value) {
-        return new ElementSource(value);
-    }
 }
