@@ -1,9 +1,16 @@
+/*
 package com.exadel.aem.toolkit.plugin.sources;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Element;
+
+import com.exadel.aem.toolkit.api.annotations.editconfig.EditConfig;
+import com.exadel.aem.toolkit.api.annotations.editconfig.EditConfigImpl;
+import com.exadel.aem.toolkit.api.annotations.editconfig.InplaceEditingConfig;
+
+import com.exadel.aem.toolkit.api.annotations.editconfig.InplaceEditingConfigImpl;
 
 import org.checkerframework.javacutil.AnnotationUtils;
 
@@ -32,6 +39,10 @@ public class ElementSource extends SourceImpl {
         int i = 0;
         for (Class annotation : annotationMirrors) {
             result[i++] = value.getAnnotation(annotation);
+            int k = i - 1;
+            if (result[k] instanceof EditConfig) {
+                result[k] = new EditConfigImpl((EditConfig) result[k]);
+            }
         }
         return result;
     }
@@ -44,3 +55,4 @@ public class ElementSource extends SourceImpl {
         return value.getAnnotation(annotationClass);
     }
 }
+*/

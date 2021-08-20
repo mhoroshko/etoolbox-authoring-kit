@@ -1,12 +1,14 @@
 package com.exadel.aem.toolkit.plugin.processor;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
@@ -14,16 +16,10 @@ import javax.lang.model.util.Types;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
-import com.exadel.aem.toolkit.api.annotations.editconfig.EditConfig;
-import com.exadel.aem.toolkit.api.annotations.meta.Scopes;
-import com.exadel.aem.toolkit.api.annotations.widgets.Extends;
-import com.exadel.aem.toolkit.api.annotations.widgets.ExtendsWrapper;
-import com.exadel.aem.toolkit.api.handlers.Target;
-import com.exadel.aem.toolkit.plugin.handlers.HandlerChains;
-import com.exadel.aem.toolkit.plugin.sources.Sources;
-import com.exadel.aem.toolkit.plugin.targets.Targets;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import static com.exadel.aem.toolkit.plugin.utils.DialogConstants.NN_ROOT;
+import com.exadel.aem.toolkit.api.annotations.main.AemComponent;
 
 //@SupportedAnnotationTypes("com.exadel.aem.toolkit.api.annotations.main.AemComponent")
 @SupportedAnnotationTypes("*")
@@ -32,6 +28,7 @@ public class EToolboxProcessor extends AbstractProcessor {
     private Elements elementUtils;
     private Filer filer;
     private Types typeUtils;
+    private Gson gson;
     private FileObject properties;
 
 
@@ -43,6 +40,7 @@ public class EToolboxProcessor extends AbstractProcessor {
         this.filer = processingEnv.getFiler();
         this.elementUtils = processingEnv.getElementUtils();
         this.typeUtils = processingEnv.getTypeUtils();
+        this.gson = new GsonBuilder().disableHtmlEscaping().create();
         try {
             this.properties = filer.getResource(StandardLocation.CLASS_OUTPUT, "", "etoolbox.properties");
         } catch (IOException e) {
@@ -53,26 +51,40 @@ public class EToolboxProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-
-        Set<? extends Element> components = roundEnv.getElementsAnnotatedWith(EditConfig.class);
-        int i = 0;
-
-        Target[] targets = new Target[components.size()];
+        Set<? extends Element> components = roundEnv.getElementsAnnotatedWith(AemComponent.class);
 
         for (Element component : components) {
-            Target target = Targets.newInstance(NN_ROOT, Scopes.CQ_EDIT_CONFIG);
-            HandlerChains.forScope(Scopes.CQ_EDIT_CONFIG).accept(Sources.fromElement(component), target);
-            targets[i++] = target;
-            Sources.fromElement(component).adaptTo(Extends.class);
-
+            processElement(component);
         }
-
-        i = 10;
         return true;
     }
 
-    private Extends getExtends(Extends extend) {
-        return new ExtendsWrapper(extend);
+    private void processElement(Element element) {
+        ClassInfo classInfo = new ClassInfo(element.toString());
+        populateAnnotations(element, classInfo);
+        populateMembers(element, classInfo);
+        try {
+            //System.getProperty("java.io.temp.dir");
+            FileObject fileObject = filer.createResource(StandardLocation.CLASS_OUTPUT, "etoolbox", element + ".json");
+            Writer writer = fileObject.openWriter();
+            writer.write(gson.toJson(classInfo));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    private void populateMembers(Element element, ClassInfo classInfo) {
+        for (Element member : element.getEnclosedElements()) {
+            MemberInfo memberInfo = new MemberInfo(member.getSimpleName().toString());
+            populateAnnotations(member, memberInfo);
+            classInfo.addMemberInfo(memberInfo);
+        }
+    }
+
+    private void populateAnnotations(Element member, BaseInfo baseInfo) {
+        for (AnnotationMirror annotationMirror : member.getAnnotationMirrors()) {
+            baseInfo.addAnnotationInfo(new AnnotationInfo(annotationMirror));
+        }
+    }
 }
