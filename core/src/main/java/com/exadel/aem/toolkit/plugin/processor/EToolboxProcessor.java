@@ -31,9 +31,6 @@ public class EToolboxProcessor extends AbstractProcessor {
     private Gson gson;
     private FileObject properties;
 
-
-    private static final String LOCATION = "C:\\Users\\user\\IdeaProjects\\etoolbox-authoring-kit\\samples\\ui.apps\\src\\main\\content\\jcr_root\\apps\\etoolbox-authoring-kit\\samples\\components\\content\\abilities-component";
-
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
@@ -55,6 +52,7 @@ public class EToolboxProcessor extends AbstractProcessor {
 
         for (Element component : components) {
             processElement(component);
+            // TODO: Process classes from AemComponent#views();
         }
         return true;
     }
@@ -64,6 +62,7 @@ public class EToolboxProcessor extends AbstractProcessor {
         populateAnnotations(element, classInfo);
         populateMembers(element, classInfo);
         try {
+            // TODO: Move all data to temp folder
             //System.getProperty("java.io.temp.dir");
             FileObject fileObject = filer.createResource(StandardLocation.CLASS_OUTPUT, "etoolbox", element + ".json");
             Writer writer = fileObject.openWriter();
@@ -74,6 +73,7 @@ public class EToolboxProcessor extends AbstractProcessor {
         }
     }
 
+    // TODO: Move this logic to Info Classes
     private void populateMembers(Element element, ClassInfo classInfo) {
         for (Element member : element.getEnclosedElements()) {
             MemberInfo memberInfo = new MemberInfo(member.getSimpleName().toString());
@@ -82,6 +82,7 @@ public class EToolboxProcessor extends AbstractProcessor {
         }
     }
 
+    // TODO: Move this logic to Info Classes
     private void populateAnnotations(Element member, BaseInfo baseInfo) {
         for (AnnotationMirror annotationMirror : member.getAnnotationMirrors()) {
             baseInfo.addAnnotationInfo(new AnnotationInfo(annotationMirror));

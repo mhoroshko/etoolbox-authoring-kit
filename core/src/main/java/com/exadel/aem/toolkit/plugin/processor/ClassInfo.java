@@ -3,6 +3,7 @@ package com.exadel.aem.toolkit.plugin.processor;
 import java.util.LinkedList;
 import java.util.List;
 
+// TODO: Try to build Source instances instead of Info Classes
 public class ClassInfo extends BaseInfo {
 
     private List<MemberInfo> memberInfos;
