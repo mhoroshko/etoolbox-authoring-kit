@@ -1,5 +1,9 @@
 package com.exadel.aem.toolkit.plugin.processor;
 
+import com.exadel.aem.toolkit.api.annotations.editconfig.InplaceEditingConfig;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,22 +26,30 @@ public class AnnotationInfo {
         Map<? extends ExecutableElement, ? extends AnnotationValue> elementValues = annotationMirror.getElementValues();
         for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> elementValue : elementValues.entrySet()) {
             TypeMirror returnType = elementValue.getKey().getReturnType();
-            String key = elementValue.getKey().toString();
+            String key = StringUtils.remove(elementValue.getKey().toString(), "()");
             Object value = elementValue.getValue().getValue();
             if (TypeKind.ARRAY.equals(returnType.getKind())) {
-                List<?> list = ((List<?>) value);
+                List<?> list = (List<?>) value;
                 if (!list.isEmpty() && list.get(0) instanceof AnnotationMirror) {
-                    this.values.put(key, list.stream().map(annotation -> new AnnotationInfo(((AnnotationMirror) annotation))).collect(Collectors.toList()));
+                    this.values.put(key, list.stream().map(annotation -> new AnnotationInfo(((AnnotationMirror) annotation))).toArray());
                 } else {
-                    this.values.put(key, elementValue.getValue().getValue().toString().replace("\"", "").split(","));
+                    this.values.put(key, list);
                 }
             } else {
-                if (elementValue.getValue().getValue() instanceof AnnotationMirror) {
-                    this.values.put(key, new AnnotationInfo((AnnotationMirror) elementValue.getValue().getValue()));
+                if (value instanceof AnnotationMirror) {
+                    this.values.put(key, new AnnotationInfo((AnnotationMirror) value));
                 } else {
-                    this.values.put(key, elementValue.getValue().getValue().toString());
+                    this.values.put(key, value.toString());
                 }
             }
         }
+    }
+
+    public Map<String, Object> getValues() {
+        return this.values;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

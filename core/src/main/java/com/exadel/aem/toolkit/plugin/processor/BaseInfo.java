@@ -16,4 +16,12 @@ abstract class BaseInfo {
     public void addAnnotationInfo(AnnotationInfo annotationInfo) {
         this.annotationInfos.add(annotationInfo);
     }
+
+    public List<AnnotationInfo> getAnnotationInfos() {
+        return annotationInfos;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

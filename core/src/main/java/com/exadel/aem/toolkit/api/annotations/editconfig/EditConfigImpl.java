@@ -12,7 +12,7 @@ public class EditConfigImpl implements EditConfig {
 
     public EditConfigImpl(EditConfig config) {
         this.config = config;
-        this.configs = Arrays.stream(config.inplaceEditing()).map(InplaceEditingConfigImpl::new).toArray(InplaceEditingConfigImpl[]::new);
+        this.configs = Arrays.stream(config.inplaceEditing()).map(InplaceEditingConfigImpl::new).toArray(value -> new InplaceEditingConfigImpl[value]);
 
     }
 

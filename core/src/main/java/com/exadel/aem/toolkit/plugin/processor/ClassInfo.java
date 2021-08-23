@@ -16,4 +16,8 @@ public class ClassInfo extends BaseInfo {
     public void addMemberInfo(MemberInfo memberInfo) {
         this.memberInfos.add(memberInfo);
     }
+
+    public List<MemberInfo> getMemberInfos() {
+        return memberInfos;
+    }
 }
